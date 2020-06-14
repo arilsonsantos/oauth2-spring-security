@@ -1,12 +1,15 @@
-@host=http://localhost:8080/oauth/token
+@host=http://localhost:8080
 
 ###
 
-POST {{host}}
+# @name token
+POST {{host}}/oauth/token HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic clientId 123
 
-grant_type=password
-&username=joao
-&password=123
+grant_type=password&username=joao&password=123
 
+###
+
+{{host}}/customers
+Authorization:  Bearer {{token.response.body.access_token}}
