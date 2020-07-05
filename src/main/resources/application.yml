@@ -1,0 +1,22 @@
+spring:
+
+  data:
+    mongodb:
+      uri: mongodb://admin:123@127.0.0.1:27017
+      database: test
+  output:
+    ansi:
+      enabled: always
+
+security:
+  oauth2:
+    client:
+      scope:
+      - password
+      client-id: clientId
+      client-secret: "{bcrypt}$2a$10$42B0dm6qcfpojx7bbIjGYOjNJbEzc.MeWozTkhCHRKyKXKXUvxmwm"
+
+jwt:
+  secret: secret
+  validation:
+    token: 3000

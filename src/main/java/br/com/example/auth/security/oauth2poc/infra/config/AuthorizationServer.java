@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
-import br.com.example.auth.security.oauth2poc.service.UserDetailsServiceImpl;
+import br.com.example.auth.security.oauth2poc.service.CustomUserDetailsService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,13 +24,15 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
     private final AuthenticationManager authenticationManager;
     private final OAuth2ClientProperties clientProperties;
-    private final UserDetailsServiceImpl userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
 
     @Value("${jwt.secret}")
     private String jwtSecret;
 
     @Value("${jwt.validation.token}")
     private int validationToken;
+
+    private static final String RESOURCE_ID = "restservice";
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -39,6 +41,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 .secret(clientProperties.getClientSecret())
                 .accessTokenValiditySeconds(validationToken)
                 .scopes("read", "write")
+                .resourceIds(this.RESOURCE_ID)
                 .authorizedGrantTypes("password", "refresh_token");
     }
 

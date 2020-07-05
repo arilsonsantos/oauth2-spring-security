@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class UserDetailsServiceImpl implements UserDetailsService  {
+public class CustomUserDetailsService implements UserDetailsService  {
     
     private UserRepository userRepository;
     private LoginUserMapper mapper;

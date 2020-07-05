@@ -11,5 +11,44 @@ grant_type=password&username=joao&password=123
 
 ###
 
-{{host}}/customers
+{{host}}/api/customers
+Authorization:  Bearer {{token.response.body.access_token}}
+
+
+###
+{{host}}/home
+
+
+###
+{{host}}/api/users
+Authorization:  Bearer {{token.response.body.access_token}}
+
+
+###
+POST {{host}}/api/users
+Content-Type: application/json
+Authorization:  Bearer {{token.response.body.access_token}}
+
+  {
+    "username": "novouser",
+    "password": "123",
+    "enable": false
+  }
+
+###
+PUT {{host}}/api/users/5f0241e6bccfe3043dea6a83
+Content-Type: application/json
+Authorization:  Bearer {{token.response.body.access_token}}
+
+{
+  "id": "5f0241e6bccfe3043dea6a83",
+  "username": "novouser 2",
+  "password": "123",
+  "enable": false
+}
+
+###
+
+DELETE  {{host}}/api/users/5f02427a44cc3337bdd4b169
+Content-Type: application/json
 Authorization:  Bearer {{token.response.body.access_token}}
