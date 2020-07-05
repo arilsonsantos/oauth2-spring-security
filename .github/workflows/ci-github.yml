@@ -16,8 +16,8 @@ jobs:
         java-version: 1.11
     - name: Maven Clean and Install
       run: mvn clean install -DskipTests --file pom.xml    
-    - name: Maven Verify
-      run: mvn verify --file pom.xml
+#    - name: Maven Verify
+#      run: mvn verify --file pom.xml
 
   pull-request:
     needs: [ build ]
