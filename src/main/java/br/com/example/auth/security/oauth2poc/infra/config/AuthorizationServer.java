@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
-import br.com.example.auth.security.oauth2poc.service.UserDetailsServiceImpl;
+import br.com.example.auth.security.oauth2poc.service.CustomUserDetailsService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +24,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
     private final AuthenticationManager authenticationManager;
     private final OAuth2ClientProperties clientProperties;
-    private final UserDetailsServiceImpl userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
 
     @Value("${jwt.secret}")
     private String jwtSecret;

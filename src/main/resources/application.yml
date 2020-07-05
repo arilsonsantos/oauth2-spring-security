@@ -1,4 +1,5 @@
 spring:
+
   data:
     mongodb:
       uri: mongodb://admin:123@127.0.0.1:27017
