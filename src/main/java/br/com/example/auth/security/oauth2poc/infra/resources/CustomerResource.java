@@ -12,7 +12,7 @@ import br.com.example.auth.security.oauth2poc.domain.Customer;
 import br.com.example.auth.security.oauth2poc.service.CustomerService;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/api/customers")
 public class CustomerResource {
 
     @Autowired
