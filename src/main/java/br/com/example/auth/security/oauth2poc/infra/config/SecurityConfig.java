@@ -19,8 +19,6 @@ import br.com.example.auth.security.oauth2poc.service.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 
 @EnableWebSecurity
-@EnableResourceServer
-@EnableAuthorizationServer
 @AllArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -46,13 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/h2-console/**");
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
-                .authorizeRequests().anyRequest().authenticated()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder(){

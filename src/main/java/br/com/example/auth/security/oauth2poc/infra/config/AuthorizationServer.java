@@ -32,6 +32,8 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Value("${jwt.validation.token}")
     private int validationToken;
 
+    private static final String RESOURCE_ID = "restservice";
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
@@ -39,6 +41,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 .secret(clientProperties.getClientSecret())
                 .accessTokenValiditySeconds(validationToken)
                 .scopes("read", "write")
+                .resourceIds(this.RESOURCE_ID)
                 .authorizedGrantTypes("password", "refresh_token");
     }
 
