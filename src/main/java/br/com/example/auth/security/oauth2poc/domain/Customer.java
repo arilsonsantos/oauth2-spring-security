@@ -1,18 +1,21 @@
 package br.com.example.auth.security.oauth2poc.domain;
 
-import lombok.Data;
+import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Data
-@Entity
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(of = "name")
+@EqualsAndHashCode(of = "id")
+@Document("CUSTOMER")
 public class Customer {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
     private String nome;
 
 }
