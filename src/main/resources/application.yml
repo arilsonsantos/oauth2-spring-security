@@ -19,4 +19,4 @@ security:
 jwt:
   secret: secret
   validation:
-    token: 3000
+    token: 20
