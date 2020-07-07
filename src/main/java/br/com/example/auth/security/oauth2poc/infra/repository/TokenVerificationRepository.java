@@ -12,6 +12,6 @@ public interface TokenVerificationRepository extends MongoRepository<TokenVerifi
 
     Optional<TokenVerification> findByToken(String token);
 
-    TokenVerification findByUser(User user);
+    Optional<TokenVerification> findByUser(User user);
 
 }

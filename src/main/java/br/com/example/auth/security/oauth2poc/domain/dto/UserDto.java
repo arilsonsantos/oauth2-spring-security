@@ -19,6 +19,7 @@ public class UserDto {
     private String username;
     private String password;
     private boolean enable;
+    private String email;
     private List<Role> roles = new ArrayList<>();
 
     public UserDto(User user){
@@ -26,6 +27,7 @@ public class UserDto {
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.enable = user.isEnable();
+        this.email = user.getEmail();
         this.roles = user.getRoles();
     }
 

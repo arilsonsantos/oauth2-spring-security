@@ -6,6 +6,7 @@ import br.com.example.auth.security.oauth2poc.domain.Role;
 import br.com.example.auth.security.oauth2poc.domain.User;
 import br.com.example.auth.security.oauth2poc.infra.repository.CustomerRepository;
 import br.com.example.auth.security.oauth2poc.infra.repository.RoleRepository;
+import br.com.example.auth.security.oauth2poc.infra.repository.TokenVerificationRepository;
 import br.com.example.auth.security.oauth2poc.infra.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final CustomerRepository customerRepository;
-
+    private final TokenVerificationRepository tokenVerificationRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -34,6 +35,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         roleRepository.deleteAll();
         userRepository.deleteAll();
         customerRepository.deleteAll();
+        tokenVerificationRepository.deleteAll();
 
         Customer c1 = Customer.builder().nome("Customer AAA").build();
         Customer c2 = Customer.builder().nome("Customer AAA").build();
@@ -50,9 +52,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         List<Role> jose_role = Arrays.asList(user);
 
         var pass = passwordEncoder.encode("123");
-        User user1 = User.builder().username("Joao").username("joao").roles(joao_role).password(pass).enable(true).build();
-        User user2 = User.builder().username("Maria").username("maria").roles(maria_role).password(pass).enable(true).build();
-        User user3 = User.builder().username("Jose").username("jose").roles(jose_role).password(pass).enable(true).build();
+        User user1 = User.builder().username("Joao").username("joao").roles(joao_role).password(pass).email("arilsonsantos@gmail.com").enable(true).build();
+        User user2 = User.builder().username("Maria").username("maria").roles(maria_role).password(pass).email("arilsonsantos@gmail.com").enable(true).build();
+        User user3 = User.builder().username("Jose").username("jose").roles(jose_role).password(pass).email("arilsonsantos@gmail.com").enable(true).build();
 
         createUserIfNotFound(user1);
         createUserIfNotFound(user2);
