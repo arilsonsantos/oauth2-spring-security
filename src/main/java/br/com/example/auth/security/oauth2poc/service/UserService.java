@@ -1,13 +1,21 @@
 package br.com.example.auth.security.oauth2poc.service;
 
+import br.com.example.auth.security.oauth2poc.domain.TokenVerification;
 import br.com.example.auth.security.oauth2poc.domain.User;
 import br.com.example.auth.security.oauth2poc.domain.dto.UserDto;
+import br.com.example.auth.security.oauth2poc.exceptions.ResourceAlreadyExistsException;
 import br.com.example.auth.security.oauth2poc.exceptions.ResourceNotFoundException;
+import br.com.example.auth.security.oauth2poc.infra.repository.RoleRepository;
+import br.com.example.auth.security.oauth2poc.infra.repository.TokenVerificationRepository;
 import br.com.example.auth.security.oauth2poc.infra.repository.UserRepository;
+import com.sun.el.parser.Token;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,8 +24,12 @@ import java.util.Optional;
 public class UserService {
 
     private UserRepository repository;
+    private RoleRepository roleRepository;
+    private TokenVerificationRepository tokenVerificationRepository;
+    private PasswordEncoder passwordEncoder;
 
     public User create(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
 
@@ -63,5 +75,46 @@ public class UserService {
     public void deleteById(String id) {
         User userToDelete = findById(id);
         repository.delete(userToDelete);
+    }
+
+    public User registerUser(User user){
+       if(usernameExists(user.getUsername())){
+           throw new ResourceAlreadyExistsException("User already exists");
+       }
+       user.setRoles(Arrays.asList(roleRepository.findByName("USER").get()));
+       user = create(user);
+       return user;
+    }
+
+    public void createVerificationTokenForUser(String token, User user){
+        final TokenVerification tokenVerification = new TokenVerification(token, user);
+        tokenVerificationRepository.save(tokenVerification);
+    }
+
+    private boolean usernameExists(String username){
+       Optional<User> user = repository.findByUsername(username);
+       if (user.isPresent()){
+           return true;
+       }
+       return false;
+    }
+
+    public String validateTokenVerification(String token){
+        final Optional<TokenVerification> tokenVerification = tokenVerificationRepository.findByToken(token);
+        if (tokenVerification.isPresent()){
+            final User user = tokenVerification.get().getUser();
+            final Calendar cal = Calendar.getInstance();
+            if ((tokenVerification.get().getExpireDate().getTime() - cal.getTime().getTime()) <= 0){
+                return "Token expired";
+            }
+            user.setEnable(true);
+            repository.save(user);
+            return null;
+        }
+        return "Invalid token";
+    }
+
+    public User findByUsername(String username){
+         return repository.findByUsername(username).orElseThrow(()-> new ResourceNotFoundException("User not exist."));
     }
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:remove="all">To confirm your enrol</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+    />
+</head>
+<body>
+<div>
+    <h3>
+        If you have done a solicitation:
+    </h3> <br/>
+    <p>
+        Clink on link to confirm your solicitation.
+        <br/>
+        <span th:text="${confirmationUrl}"> </span>
+    </p>
+    <p>
+        Name:
+        <span th:text="${user.username}"></span>
+    </p>
+</div>
+</body>
+</html>
