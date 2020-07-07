@@ -1,6 +1,8 @@
 package br.com.example.auth.security.oauth2poc.infra.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -14,6 +16,7 @@ import br.com.example.auth.security.oauth2poc.service.CustomUserDetailsService;
 
 import lombok.AllArgsConstructor;
 
+@Configuration
 @EnableWebSecurity
 @AllArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -36,11 +39,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
+                .antMatchers(HttpMethod.OPTIONS, "/**")
                 .antMatchers("/home")
-                .antMatchers("/h2-console/**");
+                .antMatchers("/h2-console/**")
+                .antMatchers( "/api/public/**")
+                .antMatchers("/api/logout/**");
+
     }
-
-
 
     @Bean
     public PasswordEncoder passwordEncoder(){

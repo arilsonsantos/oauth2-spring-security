@@ -15,19 +15,25 @@ public class RegistrationResource {
     private UserService userService;
 
     @PostMapping("/public/registration/users")
-    public ResponseEntity<Void> registerUser(@RequestBody UserDto userDto){
+    public ResponseEntity<Void> registerUser(@RequestBody UserDto userDto) {
         User user = userService.fromDto(userDto);
         userService.registerUser(user);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/public/registrationConfirm/users")
-    public ResponseEntity<GenericResponse> confirmRegistrationUser(@RequestParam("token") String token){
+    public ResponseEntity<GenericResponse> confirmRegistrationUser(@RequestParam("token") String token) {
         final Object result = this.userService.validateTokenVerification(token);
-        if (result == null){
+        if (result == null) {
             return ResponseEntity.ok().body(GenericResponse.builder().message("success").build());
         }
         return ResponseEntity.status(HttpStatus.SEE_OTHER).body(GenericResponse.builder().message(result.toString()).build());
+    }
+
+    @GetMapping("/resendRegistrationToken/users")
+    public ResponseEntity<Void> resendRegistrationToken(@RequestParam("username") String username){
+        this.userService.generateNewVerificationToken(username);
+        return ResponseEntity.noContent().build();
     }
 
 }
