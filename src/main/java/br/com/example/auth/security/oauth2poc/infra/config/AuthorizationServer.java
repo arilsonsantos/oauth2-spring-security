@@ -1,5 +1,7 @@
 package br.com.example.auth.security.oauth2poc.infra.config;
 
+import br.com.example.auth.security.oauth2poc.service.CustomUserDetailsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.OAuth2ClientProperties;
 import org.springframework.context.annotation.Bean;
@@ -12,10 +14,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
-
-import br.com.example.auth.security.oauth2poc.service.CustomUserDetailsService;
-
-import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableAuthorizationServer

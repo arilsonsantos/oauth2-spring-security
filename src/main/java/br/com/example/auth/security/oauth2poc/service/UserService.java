@@ -8,25 +8,30 @@ import br.com.example.auth.security.oauth2poc.exceptions.ResourceNotFoundExcepti
 import br.com.example.auth.security.oauth2poc.infra.repository.RoleRepository;
 import br.com.example.auth.security.oauth2poc.infra.repository.TokenVerificationRepository;
 import br.com.example.auth.security.oauth2poc.infra.repository.UserRepository;
+import br.com.example.auth.security.oauth2poc.service.email.AbstractEmailService;
+import br.com.example.auth.security.oauth2poc.service.email.IEmailService;
 import com.sun.el.parser.Token;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
-@AllArgsConstructor
 public class UserService {
 
+    @Autowired
     private UserRepository repository;
+    @Autowired
     private RoleRepository roleRepository;
+    @Autowired
     private TokenVerificationRepository tokenVerificationRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private IEmailService emailService;
 
     public User create(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -82,7 +87,9 @@ public class UserService {
            throw new ResourceAlreadyExistsException("User already exists");
        }
        user.setRoles(Arrays.asList(roleRepository.findByName("USER").get()));
+       user.setEnable(false);
        user = create(user);
+       this.emailService.sendConfirmationHtmlEmail(user, null );
        return user;
     }
 
@@ -116,5 +123,15 @@ public class UserService {
 
     public User findByUsername(String username){
          return repository.findByUsername(username).orElseThrow(()-> new ResourceNotFoundException("User not exist."));
+    }
+
+    public TokenVerification generateNewVerificationToken(String username) {
+        User user = findByUsername(username);
+        Optional<TokenVerification> token = tokenVerificationRepository.findByUser(user);
+        token.get().updateToken(UUID.randomUUID().toString());
+        TokenVerification updatedToken  = tokenVerificationRepository.save(token.get());
+        emailService.sendConfirmationHtmlEmail(user, updatedToken);
+        return updatedToken;
+
     }
 }

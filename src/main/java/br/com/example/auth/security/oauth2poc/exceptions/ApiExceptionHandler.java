@@ -31,19 +31,31 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         .build();
         return new ResponseEntity<>(error, status);
     }
-    
+
+    //409
     @ExceptionHandler(ResourceAlreadyExistsException.class)
     public ResponseEntity<?> handleResourceAlreadyExistsException(ResourceAlreadyExistsException ex) {
 
         ErrorDetail error = ErrorDetail.builder()
-        .statusCode(HttpStatus.BAD_REQUEST.value())
-        .message(ex.getMessage())
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .message(ex.getMessage())
                 .build();
-        
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }
-    
-    
+
+    @ExceptionHandler(UserNotEnableException.class)
+    public ResponseEntity<?> handleUserNotEnableException(UserNotEnableException ex) {
+
+        ErrorDetail error = ErrorDetail.builder()
+                .statusCode(HttpStatus.CONFLICT.value())
+                .message(ex.getMessage())
+                .build();
+
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorDetail> handleResourceNotFoundException(ResourceNotFoundException ex, HttpServletRequest request) {
 
@@ -52,7 +64,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         .path(request.getRequestURI())
         .message(ex.getMessage())
                 .build();
-        
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
