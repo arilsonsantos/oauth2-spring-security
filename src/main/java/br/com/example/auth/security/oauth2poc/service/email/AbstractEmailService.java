@@ -4,8 +4,11 @@ import br.com.example.auth.security.oauth2poc.domain.TokenVerification;
 import br.com.example.auth.security.oauth2poc.domain.User;
 import br.com.example.auth.security.oauth2poc.exceptions.ResourceNotFoundException;
 import br.com.example.auth.security.oauth2poc.service.UserService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.TemplateEngine;
@@ -31,8 +34,8 @@ public class AbstractEmailService implements IEmailService {
     private  UserService userService;
 
     @Override
-    public void sendHtmlEmail(MimeMessage message) {
-
+    public void sendHtmlEmail(MimeMessage message) throws MessagingException {
+        javaMailSender.send(message);
     }
 
     @Override
@@ -49,7 +52,6 @@ public class AbstractEmailService implements IEmailService {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
         mimeMessageHelper.setTo(user.getEmail());
-        mimeMessageHelper.setFrom(this.sender);
         mimeMessageHelper.setSubject("Testing confirmation");
         mimeMessageHelper.setSentDate(new Date(System.currentTimeMillis()));
         mimeMessageHelper.setText(htmlFromTemplate(user, tokenVerification), true);
@@ -58,12 +60,13 @@ public class AbstractEmailService implements IEmailService {
 
     protected String htmlFromTemplate(User user, TokenVerification tokenVerification){
         String token = UUID.randomUUID().toString();
+
         if (tokenVerification == null){
             this.userService.createVerificationTokenForUser(token, user);
         }else{
             token = tokenVerification.getToken();
         }
-        String confirmationUrl = this.contextPath +  "/api/public/registration/users?token=" + token;
+        String confirmationUrl = this.contextPath +  "/api/public/registrationConfirm/users?token=" + token;
         Context context = new Context();
         context.setVariable("user", user);
         context.setVariable("confirmationUrl", confirmationUrl);
