@@ -3,6 +3,7 @@ package br.com.example.auth.security.oauth2poc.domain;
 import ch.qos.logback.core.net.SyslogOutputStream;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,9 +17,10 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(of = "id")
 @Document("TOKEN_VERIFICATION")
+@NoArgsConstructor
 public class TokenVerification {
 
-    private static final int EXPIRATION = 60 * 24;
+    private static final int EXPIRATION = 1;//60 * 24;
 
     @Id
     private String id;
