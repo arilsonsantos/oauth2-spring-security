@@ -20,7 +20,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class TokenVerification {
 
-    private static final int EXPIRATION = 1;//60 * 24;
+    private static final int EXPIRATION = 60 * 24;
 
     @Id
     private String id;

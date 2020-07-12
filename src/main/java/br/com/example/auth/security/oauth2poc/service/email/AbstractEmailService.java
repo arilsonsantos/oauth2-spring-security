@@ -66,7 +66,7 @@ public class AbstractEmailService implements IEmailService {
         }else{
             token = tokenVerification.getToken();
         }
-        String confirmationUrl = this.contextPath +  "/api/public/registrationConfirm/users?token=" + token;
+        String confirmationUrl = this.contextPath +  "/api/public/registration/users/confirmation?token=" + token;
         Context context = new Context();
         context.setVariable("user", user);
         context.setVariable("confirmationUrl", confirmationUrl);

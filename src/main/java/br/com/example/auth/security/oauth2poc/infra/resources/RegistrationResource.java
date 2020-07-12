@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/public/registration/users")
 public class RegistrationResource {
 
     private UserService userService;
 
-    @PostMapping("/public/registration/users")
+    @PostMapping
     public ResponseEntity<Void> registerUser(@RequestBody UserDto userDto) {
         User user = userService.fromDto(userDto);
         userService.registerUser(user);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/public/registrationConfirm/users")
+    @GetMapping("/confirmation")
     public ResponseEntity<GenericResponse> confirmRegistrationUser(@RequestParam("token") String token) {
         final Object result = this.userService.validateTokenVerification(token);
         if (result == null) {
@@ -32,7 +32,7 @@ public class RegistrationResource {
         return ResponseEntity.status(HttpStatus.SEE_OTHER).body(GenericResponse.builder().message(result.toString()).build());
     }
 
-    @GetMapping("/resendRegistrationToken/users")
+    @GetMapping("/resendConfirmationToken/{username}")
     public ResponseEntity<Void> resendRegistrationToken(@RequestParam("username") String username){
         this.userService.generateNewVerificationToken(username);
         return ResponseEntity.noContent().build();
