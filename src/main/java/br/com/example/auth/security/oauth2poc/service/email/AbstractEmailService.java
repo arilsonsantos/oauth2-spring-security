@@ -39,26 +39,29 @@ public class AbstractEmailService implements IEmailService {
     }
 
     @Override
-    public void sendConfirmationHtmlEmail(User user, TokenVerification tokenVerification) {
+    public void sendConfirmationHtmlEmail(User user, TokenVerification tokenVerification, int select) {
         try {
-            MimeMessage mimeMessage = prepareMimeMessageFromUser(user, tokenVerification);
+            MimeMessage mimeMessage = prepareMimeMessageFromUser(user, tokenVerification, select);
             sendHtmlEmail(mimeMessage);
         }catch (MessagingException ex){
             throw new ResourceNotFoundException("Error trying to send email.");
         }
     }
 
-    protected MimeMessage prepareMimeMessageFromUser(User user, TokenVerification tokenVerification) throws MessagingException {
+    protected MimeMessage prepareMimeMessageFromUser(User user, TokenVerification tokenVerification, int select) throws MessagingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
         mimeMessageHelper.setTo(user.getEmail());
         mimeMessageHelper.setSubject("Testing confirmation");
+        if (select == 1){
+            mimeMessageHelper.setSubject("Reset password");
+        }
         mimeMessageHelper.setSentDate(new Date(System.currentTimeMillis()));
-        mimeMessageHelper.setText(htmlFromTemplate(user, tokenVerification), true);
+        mimeMessageHelper.setText(htmlFromTemplate(user, tokenVerification, select), true);
         return mimeMessage;
     }
 
-    protected String htmlFromTemplate(User user, TokenVerification tokenVerification){
+    protected String htmlFromTemplate(User user, TokenVerification tokenVerification, int select){
         String token = UUID.randomUUID().toString();
 
         if (tokenVerification == null){
@@ -67,6 +70,9 @@ public class AbstractEmailService implements IEmailService {
             token = tokenVerification.getToken();
         }
         String confirmationUrl = this.contextPath +  "/api/public/registration/users/confirmation?token=" + token;
+        if (select == 1){
+            confirmationUrl = this.contextPath +  "/api/public/registration/users/change-password?id=" + user.getId()+ "&token=" + token;
+        }
         Context context = new Context();
         context.setVariable("user", user);
         context.setVariable("confirmationUrl", confirmationUrl);

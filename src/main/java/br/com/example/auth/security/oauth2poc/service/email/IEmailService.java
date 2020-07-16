@@ -11,6 +11,6 @@ import javax.mail.internet.MimeMessage;
 public interface IEmailService {
 
     void sendHtmlEmail(MimeMessage message) throws MessagingException;
-    void sendConfirmationHtmlEmail(User user, TokenVerification tokenVerification);
+    void sendConfirmationHtmlEmail(User user, TokenVerification tokenVerification, int select);
 
 }

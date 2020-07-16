@@ -89,7 +89,7 @@ public class UserService {
        user.setRoles(Arrays.asList(roleRepository.findByName("USER").get()));
        user.setEnable(false);
        user = create(user);
-       this.emailService.sendConfirmationHtmlEmail(user, null );
+       this.emailService.sendConfirmationHtmlEmail(user, null, 0 );
        return user;
     }
 
@@ -125,13 +125,34 @@ public class UserService {
          return repository.findByUsername(username).orElseThrow(()-> new ResourceNotFoundException("User not exist."));
     }
 
-    public TokenVerification generateNewVerificationToken(String username) {
+    public TokenVerification generateNewVerificationToken(String username, int select) {
         User user = findByUsername(username);
         Optional<TokenVerification> token = tokenVerificationRepository.findByUser(user);
         token.get().updateToken(UUID.randomUUID().toString());
         TokenVerification updatedToken  = tokenVerificationRepository.save(token.get());
-        emailService.sendConfirmationHtmlEmail(user, updatedToken);
+        emailService.sendConfirmationHtmlEmail(user, updatedToken, select);
         return updatedToken;
 
+    }
+
+    public String validatePasswordResetToken(String idUser, String token) {
+        final Optional<TokenVerification> tokenVerification = tokenVerificationRepository.findByToken(token);
+        if (!tokenVerification.isPresent() || !idUser.equals(tokenVerification.get().getUser().getId()) ){
+            return "invalidToken";
+        }
+        final Calendar cal = Calendar.getInstance();
+        if ((tokenVerification.get().getExpireDate().getTime() - cal.getTime().getTime()) <= 0){
+            return "expired";
+        }
+        return null;
+    }
+
+    public TokenVerification getVerificationTokenByToken(String token) {
+        return tokenVerificationRepository.findByToken(token).orElseThrow(() -> new ResourceNotFoundException("Token not found."));
+    }
+
+    public void changeUserPassword(User user, String password) {
+        user.setPassword(passwordEncoder.encode(password));
+        repository.save(user);
     }
 }
