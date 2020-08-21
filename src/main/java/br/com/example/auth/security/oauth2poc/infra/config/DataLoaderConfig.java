@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Configuration
 @AllArgsConstructor
-public class SetupDataLoader implements ApplicationListener<ContextRefreshedEvent> {
+public class DataLoaderConfig implements ApplicationListener<ContextRefreshedEvent> {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
