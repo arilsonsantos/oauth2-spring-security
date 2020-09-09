@@ -114,7 +114,7 @@ public class UserService {
         if (tokenVerification.isPresent()){
             final User user = tokenVerification.get().getUser();
 
-            boolean expired = isExpired(tokenVerification);
+            boolean expired = isExpired(tokenVerification.get());
 
             if (expired){
                 return "expired";
@@ -131,23 +131,21 @@ public class UserService {
          return repository.findByUsername(username).orElseThrow(()-> new ResourceNotFoundException("User not exist."));
     }
 
-    public TokenVerification generateNewVerificationToken(String username, int select) {
+    public void generateNewVerificationToken(String username, int select) {
         User user = findByUsername(username);
         Optional<TokenVerification> token = tokenVerificationRepository.findByUser(user);
         token.get().updateToken(UUID.randomUUID().toString());
         TokenVerification updatedToken  = tokenVerificationRepository.save(token.get());
         emailService.sendConfirmationHtmlEmail(user, updatedToken, select);
-        return updatedToken;
-
     }
 
     public String validatePasswordResetToken(String idUser, String token) {
         final Optional<TokenVerification> tokenVerification = tokenVerificationRepository.findByToken(token);
-        if (!tokenVerification.isPresent() || !idUser.equals(tokenVerification.get().getUser().getId()) ){
+        if (tokenVerification.isEmpty() || !idUser.equals(tokenVerification.get().getUser().getId()) ){
             return "invalidToken";
         }
 
-        boolean expired = isExpired(tokenVerification);
+        boolean expired = isExpired(tokenVerification.get());
 
         if (expired){
             return "expired";
@@ -165,9 +163,9 @@ public class UserService {
         repository.save(user);
     }
 
-    private boolean isExpired(Optional<TokenVerification> tokenVerification){
-        boolean expired = MINUTES.between(LocalDateTime.now(), tokenVerification.get().getExpireDate()) <=0;
+    private boolean isExpired(TokenVerification tokenVerification){
+        boolean expired = MINUTES.between(LocalDateTime.now(), tokenVerification.getExpireDate()) <=0;
 
-       return expired ? true : false;
+       return expired;
     }
 }
