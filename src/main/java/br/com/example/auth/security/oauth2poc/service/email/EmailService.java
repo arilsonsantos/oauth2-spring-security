@@ -4,10 +4,13 @@ import br.com.example.auth.security.oauth2poc.domain.TokenVerification;
 import br.com.example.auth.security.oauth2poc.domain.User;
 import br.com.example.auth.security.oauth2poc.exceptions.ResourceNotFoundException;
 import br.com.example.auth.security.oauth2poc.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -16,7 +19,9 @@ import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.UUID;
 
-public class AbstractEmailService implements IEmailService {
+@Slf4j
+@Service
+public class EmailService implements IEmailService {
 
     @Value("${default.sender}")
     private String sender;
@@ -32,7 +37,9 @@ public class AbstractEmailService implements IEmailService {
 
     @Override
     public void sendHtmlEmail(MimeMessage message) {
+        log.info("Sending email...");
         javaMailSender.send(message);
+        log.info("Email has sent with success.");
     }
 
     @Override
@@ -45,20 +52,23 @@ public class AbstractEmailService implements IEmailService {
         }
     }
 
-    protected MimeMessage prepareMimeMessageFromUser(User user, TokenVerification tokenVerification, int select) throws MessagingException {
+    private MimeMessage prepareMimeMessageFromUser(User user, TokenVerification tokenVerification, int select) throws MessagingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-        mimeMessageHelper.setTo(user.getEmail());
-        mimeMessageHelper.setSubject("Testing confirmation");
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
+
+        helper.setFrom(sender);
+        helper.setSubject("Testing confirmation");
+        helper.setSentDate(new Date(System.currentTimeMillis()));
+        helper.setText(htmlFromTemplate(user, tokenVerification, select), true);
+        helper.setTo(user.getEmail());
+
         if (select == 1){
-            mimeMessageHelper.setSubject("Reset password");
+            helper.setSubject("Reset password");
         }
-        mimeMessageHelper.setSentDate(new Date(System.currentTimeMillis()));
-        mimeMessageHelper.setText(htmlFromTemplate(user, tokenVerification, select), true);
         return mimeMessage;
     }
 
-    protected String htmlFromTemplate(User user, TokenVerification tokenVerification, int select){
+    private String htmlFromTemplate(User user, TokenVerification tokenVerification, int select){
         String token = UUID.randomUUID().toString();
 
         if (tokenVerification == null){

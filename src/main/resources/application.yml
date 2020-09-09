@@ -12,18 +12,18 @@ spring:
   output:
     ansi:
       enabled: always
-#  mail:
-#    host: smtp.mailtrap.io
-#    port: 2525
-#    username: 4f967c13da91c3
-#    password: 762a7eb99def56
-#    protocol: smtp
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          starttls:
-#            enable: true
+  mail:
+    host: smtp.mailtrap.io
+    port: 2525
+    username: 4f967c13da91c3
+    password: 762a7eb99def56
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          - auth: true
+          - starttls:
+              enable: true
 
 security:
   oauth2:
