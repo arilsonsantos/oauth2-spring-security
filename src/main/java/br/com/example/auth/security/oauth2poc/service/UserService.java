@@ -8,16 +8,19 @@ import br.com.example.auth.security.oauth2poc.exceptions.ResourceNotFoundExcepti
 import br.com.example.auth.security.oauth2poc.infra.repository.RoleRepository;
 import br.com.example.auth.security.oauth2poc.infra.repository.TokenVerificationRepository;
 import br.com.example.auth.security.oauth2poc.infra.repository.UserRepository;
-import br.com.example.auth.security.oauth2poc.service.email.AbstractEmailService;
 import br.com.example.auth.security.oauth2poc.service.email.IEmailService;
-import com.sun.el.parser.Token;
-import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import static java.time.temporal.ChronoUnit.MINUTES;
 
 @Service
 public class UserService {
@@ -110,10 +113,13 @@ public class UserService {
         final Optional<TokenVerification> tokenVerification = tokenVerificationRepository.findByToken(token);
         if (tokenVerification.isPresent()){
             final User user = tokenVerification.get().getUser();
-            final Calendar cal = Calendar.getInstance();
-            if ((tokenVerification.get().getExpireDate().getTime() - cal.getTime().getTime()) <= 0){
-                return "Token expired";
+
+            boolean expired = isExpired(tokenVerification);
+
+            if (expired){
+                return "expired";
             }
+
             user.setEnable(true);
             repository.save(user);
             return null;
@@ -140,10 +146,13 @@ public class UserService {
         if (!tokenVerification.isPresent() || !idUser.equals(tokenVerification.get().getUser().getId()) ){
             return "invalidToken";
         }
-        final Calendar cal = Calendar.getInstance();
-        if ((tokenVerification.get().getExpireDate().getTime() - cal.getTime().getTime()) <= 0){
+
+        boolean expired = isExpired(tokenVerification);
+
+        if (expired){
             return "expired";
         }
+
         return null;
     }
 
@@ -154,5 +163,11 @@ public class UserService {
     public void changeUserPassword(User user, String password) {
         user.setPassword(passwordEncoder.encode(password));
         repository.save(user);
+    }
+
+    private boolean isExpired(Optional<TokenVerification> tokenVerification){
+        boolean expired = MINUTES.between(LocalDateTime.now(), tokenVerification.get().getExpireDate()) <=0;
+
+       return expired ? true : false;
     }
 }

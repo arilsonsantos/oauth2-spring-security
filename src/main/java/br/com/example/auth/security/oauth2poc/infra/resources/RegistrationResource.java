@@ -33,7 +33,7 @@ public class RegistrationResource {
         return ResponseEntity.status(HttpStatus.SEE_OTHER).body(GenericResponse.builder().message(result.toString()).build());
     }
 
-    @RequestMapping(method = RequestMethod.HEAD, path = "/resendConfirmationToken/{username}" )
+    @GetMapping(path = "/resendConfirmationToken/{username}" )
     public ResponseEntity<Void> resendRegistrationToken(@PathVariable ("username") String username){
         this.userService.generateNewVerificationToken(username, 0);
         return ResponseEntity.noContent().build();
