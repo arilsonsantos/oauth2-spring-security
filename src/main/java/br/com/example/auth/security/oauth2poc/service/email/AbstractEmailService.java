@@ -4,11 +4,8 @@ import br.com.example.auth.security.oauth2poc.domain.TokenVerification;
 import br.com.example.auth.security.oauth2poc.domain.User;
 import br.com.example.auth.security.oauth2poc.exceptions.ResourceNotFoundException;
 import br.com.example.auth.security.oauth2poc.service.UserService;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.TemplateEngine;
@@ -27,14 +24,14 @@ public class AbstractEmailService implements IEmailService {
     private String contextPath;
 
     @Autowired
-    private  TemplateEngine templateEngine;
+    private TemplateEngine templateEngine;
     @Autowired
     private  JavaMailSender javaMailSender;
     @Autowired
     private  UserService userService;
 
     @Override
-    public void sendHtmlEmail(MimeMessage message) throws MessagingException {
+    public void sendHtmlEmail(MimeMessage message) {
         javaMailSender.send(message);
     }
 

@@ -12,6 +12,18 @@ spring:
   output:
     ansi:
       enabled: always
+#  mail:
+#    host: smtp.mailtrap.io
+#    port: 2525
+#    username: 4f967c13da91c3
+#    password: 762a7eb99def56
+#    protocol: smtp
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
 
 security:
   oauth2:
@@ -19,7 +31,7 @@ security:
       scope:
       - password
       client-id: clientId
-      client-secret: "{bcrypt}$2a$10$42B0dm6qcfpojx7bbIjGYOjNJbEzc.MeWozTkhCHRKyKXKXUvxmwm"
+      client-secret: "{bcrypt}$2a$10$y0vUfW7GsTTjbk..7pBqdOs0ikeF16DcIsuWbMLzG08Y/2fr75bIi"
 
 jwt:
   secret: secret
@@ -27,8 +39,8 @@ jwt:
     token: 60
 
 default:
-  sender: arilsonsantos@gmail.com
-  recipient: arilsonsantos@gmail.com
+  sender: orion.aws@outlook.com
+  recipient: orion.aws@outlook.com
   url: http://localhost:8080
 
 

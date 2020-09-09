@@ -38,10 +38,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS, "/**")
                 .antMatchers("/home")
                 .antMatchers("/h2-console/**")
-                .antMatchers( "/api/public/**")
                 .antMatchers("/api/logout/**")
-                .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**" );
-
+                .antMatchers( "/api/public/**")
+                .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui/index.html", "/webjars/**" );
     }
 
     @Bean
@@ -50,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     public static void main(String[] args) {
-        System.out.println(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("secret"));
+        System.out.println(PasswordEncoderFactories.createDelegatingPasswordEncoder().encode("123"));
     }
 
 }

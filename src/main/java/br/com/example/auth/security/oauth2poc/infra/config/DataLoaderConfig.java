@@ -27,6 +27,7 @@ public class DataLoaderConfig implements ApplicationListener<ContextRefreshedEve
     private final RoleRepository roleRepository;
     private final CustomerRepository customerRepository;
     private final TokenVerificationRepository tokenVerificationRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 

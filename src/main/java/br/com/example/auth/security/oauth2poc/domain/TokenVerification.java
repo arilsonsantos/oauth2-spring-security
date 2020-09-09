@@ -1,6 +1,5 @@
 package br.com.example.auth.security.oauth2poc.domain;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -10,9 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
-import java.util.Calendar;
-import java.util.Date;
 
 @Data
 @EqualsAndHashCode(of = "id")
@@ -25,7 +21,7 @@ public class TokenVerification {
     @Id
     private String id;
     private String token;
-    private Date expireDate;
+    private LocalDateTime expireDate;
 
     @DBRef(lazy = true)
     private User user;
@@ -41,11 +37,8 @@ public class TokenVerification {
         this.expireDate = calculateExpireDate(EXPIRATION);
     }
 
-    private Date calculateExpireDate(final int expireTimeInMinutes){
-        final Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(new Date().getTime());
-        cal.add(Calendar.MINUTE, expireTimeInMinutes);
-        return new Date(cal.getTime().getTime());
+    private LocalDateTime calculateExpireDate(final int expireTimeInMinutes){
+        return LocalDateTime.now().plusMinutes(expireTimeInMinutes);
     }
 
     public void updateToken(final String token){
