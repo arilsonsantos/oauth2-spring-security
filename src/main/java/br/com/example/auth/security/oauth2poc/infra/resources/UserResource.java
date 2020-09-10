@@ -6,7 +6,6 @@ import br.com.example.auth.security.oauth2poc.domain.dto.UserDto;
 import br.com.example.auth.security.oauth2poc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.token.TokenService;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -24,8 +23,6 @@ public class UserResource {
 
     @Autowired
     UserService userService;
-
-
 
     @GetMapping
     public ResponseEntity<List<UserDto>> findAll() {

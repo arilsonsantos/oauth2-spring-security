@@ -39,7 +39,7 @@ public class DataLoaderConfig implements ApplicationListener<ContextRefreshedEve
         tokenVerificationRepository.deleteAll();
 
         Customer c1 = Customer.builder().nome("Customer AAA").build();
-        Customer c2 = Customer.builder().nome("Customer AAA").build();
+        Customer c2 = Customer.builder().nome("Customer BBB").build();
         createCustomerIfNotFound(c1);
         createCustomerIfNotFound(c2);
 

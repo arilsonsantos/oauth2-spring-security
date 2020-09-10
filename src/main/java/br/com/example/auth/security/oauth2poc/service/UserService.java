@@ -92,7 +92,7 @@ public class UserService {
        user.setRoles(Arrays.asList(roleRepository.findByName("USER").get()));
        user.setEnable(false);
        user = create(user);
-       this.emailService.sendConfirmationHtmlEmail(user, null, 0 );
+       this.emailService.sendConfirmationHtmlEmail(user, null, false);
        return user;
     }
 
@@ -131,12 +131,12 @@ public class UserService {
          return repository.findByUsername(username).orElseThrow(()-> new ResourceNotFoundException("User not exist."));
     }
 
-    public void generateNewVerificationToken(String username, int select) {
+    public void generateNewVerificationToken(String username, boolean emailConfirmation) {
         User user = findByUsername(username);
         Optional<TokenVerification> token = tokenVerificationRepository.findByUser(user);
         token.get().updateToken(UUID.randomUUID().toString());
         TokenVerification updatedToken  = tokenVerificationRepository.save(token.get());
-        emailService.sendConfirmationHtmlEmail(user, updatedToken, select);
+        emailService.sendConfirmationHtmlEmail(user, updatedToken, emailConfirmation);
     }
 
     public String validatePasswordResetToken(String idUser, String token) {

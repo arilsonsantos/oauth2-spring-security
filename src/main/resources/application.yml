@@ -1,8 +1,6 @@
 spring:
-
   thymeleaf:
     prefix: classpath:/templates/
-
   data:
     mongodb:
       uri: mongodb://admin:123@localhost:27017/?minPoolSize=10
@@ -39,8 +37,7 @@ jwt:
     token: 60
 
 default:
-  sender: orion.aws@outlook.com
-  recipient: orion.aws@outlook.com
+  sender: orion@api.com
   url: http://localhost:8080
 
 

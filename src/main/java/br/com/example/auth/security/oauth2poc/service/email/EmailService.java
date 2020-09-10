@@ -7,7 +7,6 @@ import br.com.example.auth.security.oauth2poc.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -18,6 +17,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.UUID;
+
+import static java.lang.Boolean.TRUE;
 
 @Slf4j
 @Service
@@ -43,32 +44,32 @@ public class EmailService implements IEmailService {
     }
 
     @Override
-    public void sendConfirmationHtmlEmail(User user, TokenVerification tokenVerification, int select) {
+    public void sendConfirmationHtmlEmail(User user, TokenVerification tokenVerification, boolean emailConfirmation) {
         try {
-            MimeMessage mimeMessage = prepareMimeMessageFromUser(user, tokenVerification, select);
+            MimeMessage mimeMessage = prepareMimeMessageFromUser(user, tokenVerification, emailConfirmation);
             sendHtmlEmail(mimeMessage);
         }catch (MessagingException ex){
             throw new ResourceNotFoundException("Error trying to send email.");
         }
     }
 
-    private MimeMessage prepareMimeMessageFromUser(User user, TokenVerification tokenVerification, int select) throws MessagingException {
+    private MimeMessage prepareMimeMessageFromUser(User user, TokenVerification tokenVerification, boolean  emailConfirmation) throws MessagingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
 
         helper.setFrom(sender);
-        helper.setSubject("Testing confirmation");
+        helper.setSubject("User confirmation");
         helper.setSentDate(new Date(System.currentTimeMillis()));
-        helper.setText(htmlFromTemplate(user, tokenVerification, select), true);
+        helper.setText(htmlFromTemplate(user, tokenVerification, emailConfirmation), TRUE);
         helper.setTo(user.getEmail());
 
-        if (select == 1){
+        if (emailConfirmation == false){
             helper.setSubject("Reset password");
         }
         return mimeMessage;
     }
 
-    private String htmlFromTemplate(User user, TokenVerification tokenVerification, int select){
+    private String htmlFromTemplate(User user, TokenVerification tokenVerification, boolean  emailConfirmation){
         String token = UUID.randomUUID().toString();
 
         if (tokenVerification == null){
@@ -77,7 +78,7 @@ public class EmailService implements IEmailService {
             token = tokenVerification.getToken();
         }
         String confirmationUrl = this.contextPath +  "/api/public/registration/users/confirmation?token=" + token;
-        if (select == 1){
+        if (emailConfirmation == false){
             confirmationUrl = this.contextPath +  "/api/public/registration/users/change-password?id=" + user.getId()+ "&token=" + token;
         }
         Context context = new Context();
