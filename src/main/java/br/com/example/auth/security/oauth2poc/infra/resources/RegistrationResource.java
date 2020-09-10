@@ -35,14 +35,14 @@ public class RegistrationResource {
 
     @GetMapping(path = "/resendConfirmationToken/{username}" )
     public ResponseEntity<Void> resendRegistrationToken(@PathVariable ("username") String username){
-        this.userService.generateNewVerificationToken(username, 0);
+        this.userService.generateNewVerificationToken(username, false);
         return ResponseEntity.noContent().build();
     }
 
     //TODO change to reset user
     @PostMapping("/resetPassword/users")
     public ResponseEntity<Void> resetPassword (@RequestParam("username") String username){
-        this.userService.generateNewVerificationToken(username, 1);
+        this.userService.generateNewVerificationToken(username, true);
         return  ResponseEntity.noContent().build();
     }
 
