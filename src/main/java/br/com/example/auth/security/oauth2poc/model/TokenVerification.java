@@ -1,4 +1,4 @@
-package br.com.example.auth.security.oauth2poc.domain;
+package br.com.example.auth.security.oauth2poc.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -7,7 +7,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data

@@ -1,10 +1,9 @@
-package br.com.example.auth.security.oauth2poc.domain;
-
+package br.com.example.auth.security.oauth2poc.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 
 @Getter
 @Setter
@@ -13,10 +12,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @ToString(of = "name")
 @EqualsAndHashCode(of = "id")
-@Document("ROLE")
-public class Role {
+@Document("CUSTOMER")
+public class Customer {
     @Id
     private String id;
-    private String name;
+    private String nome;
 
 }

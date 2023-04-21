@@ -1,4 +1,4 @@
-package br.com.example.auth.security.oauth2poc.login;
+package br.com.example.auth.security.oauth2poc.model.login;
 
 import java.util.Collection;
 import java.util.List;

@@ -1,7 +1,7 @@
 package br.com.example.auth.security.oauth2poc.service.email;
 
-import br.com.example.auth.security.oauth2poc.domain.TokenVerification;
-import br.com.example.auth.security.oauth2poc.domain.User;
+import br.com.example.auth.security.oauth2poc.model.TokenVerification;
+import br.com.example.auth.security.oauth2poc.model.User;
 import br.com.example.auth.security.oauth2poc.exceptions.ResourceNotFoundException;
 import br.com.example.auth.security.oauth2poc.service.UserService;
 import lombok.extern.slf4j.Slf4j;

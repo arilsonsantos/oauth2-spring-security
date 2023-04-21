@@ -1,22 +1,21 @@
 package br.com.example.auth.security.oauth2poc.service;
 
-import br.com.example.auth.security.oauth2poc.domain.User;
 import br.com.example.auth.security.oauth2poc.exceptions.UserNotEnableException;
-import br.com.example.auth.security.oauth2poc.login.LoginUser;
+import br.com.example.auth.security.oauth2poc.model.login.LoginUser;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import br.com.example.auth.security.oauth2poc.infra.repository.UserRepository;
-import br.com.example.auth.security.oauth2poc.login.LoginUserMapper;
+import br.com.example.auth.security.oauth2poc.repository.UserRepository;
+import br.com.example.auth.security.oauth2poc.model.login.LoginUserMapper;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService  {
-    
+
     private UserRepository userRepository;
     private LoginUserMapper mapper;
 

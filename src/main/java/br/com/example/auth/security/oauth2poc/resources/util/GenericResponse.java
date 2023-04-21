@@ -1,4 +1,4 @@
-package br.com.example.auth.security.oauth2poc.infra.resources.util;
+package br.com.example.auth.security.oauth2poc.resources.util;
 
 import lombok.Builder;
 import lombok.Data;

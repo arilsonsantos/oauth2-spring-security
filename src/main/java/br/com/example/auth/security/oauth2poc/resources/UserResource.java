@@ -1,8 +1,8 @@
-package br.com.example.auth.security.oauth2poc.infra.resources;
+package br.com.example.auth.security.oauth2poc.resources;
 
-import br.com.example.auth.security.oauth2poc.domain.Role;
-import br.com.example.auth.security.oauth2poc.domain.User;
-import br.com.example.auth.security.oauth2poc.domain.dto.UserDto;
+import br.com.example.auth.security.oauth2poc.model.Role;
+import br.com.example.auth.security.oauth2poc.model.User;
+import br.com.example.auth.security.oauth2poc.model.dto.UserDto;
 import br.com.example.auth.security.oauth2poc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

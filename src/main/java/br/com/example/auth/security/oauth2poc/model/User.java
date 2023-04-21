@@ -1,4 +1,4 @@
-package br.com.example.auth.security.oauth2poc.domain;
+package br.com.example.auth.security.oauth2poc.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

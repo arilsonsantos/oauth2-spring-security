@@ -1,4 +1,4 @@
-package br.com.example.auth.security.oauth2poc.infra.config;
+package br.com.example.auth.security.oauth2poc.config;
 
 import br.com.example.auth.security.oauth2poc.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;

@@ -1,8 +1,7 @@
-package br.com.example.auth.security.oauth2poc.infra.repository;
+package br.com.example.auth.security.oauth2poc.repository;
 
-import br.com.example.auth.security.oauth2poc.domain.Customer;
+import br.com.example.auth.security.oauth2poc.model.Customer;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository

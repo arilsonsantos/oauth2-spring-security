@@ -1,4 +1,4 @@
-package br.com.example.auth.security.oauth2poc.infra.resources;
+package br.com.example.auth.security.oauth2poc.resources;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.example.auth.security.oauth2poc.domain.Customer;
+import br.com.example.auth.security.oauth2poc.model.Customer;
 import br.com.example.auth.security.oauth2poc.service.CustomerService;
 
 @RestController
@@ -22,5 +22,5 @@ public class CustomerResource {
     public ResponseEntity<List<Customer>> searchAll() {
         return ResponseEntity.ok(this.customerService.findAll());
     }
-    
+
 }

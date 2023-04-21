@@ -1,9 +1,8 @@
-package br.com.example.auth.security.oauth2poc.domain.dto;
+package br.com.example.auth.security.oauth2poc.model.dto;
 
-import br.com.example.auth.security.oauth2poc.domain.Role;
-import br.com.example.auth.security.oauth2poc.domain.User;
+import br.com.example.auth.security.oauth2poc.model.Role;
+import br.com.example.auth.security.oauth2poc.model.User;
 import lombok.*;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.ArrayList;
 import java.util.List;

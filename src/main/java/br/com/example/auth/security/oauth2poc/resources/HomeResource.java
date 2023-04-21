@@ -1,4 +1,4 @@
-package br.com.example.auth.security.oauth2poc.infra.resources;
+package br.com.example.auth.security.oauth2poc.resources;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

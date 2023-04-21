@@ -1,9 +1,9 @@
-package br.com.example.auth.security.oauth2poc.infra.resources;
+package br.com.example.auth.security.oauth2poc.resources;
 
-import br.com.example.auth.security.oauth2poc.domain.TokenVerification;
-import br.com.example.auth.security.oauth2poc.domain.User;
-import br.com.example.auth.security.oauth2poc.domain.dto.UserDto;
-import br.com.example.auth.security.oauth2poc.infra.resources.util.GenericResponse;
+import br.com.example.auth.security.oauth2poc.model.TokenVerification;
+import br.com.example.auth.security.oauth2poc.model.User;
+import br.com.example.auth.security.oauth2poc.model.dto.UserDto;
+import br.com.example.auth.security.oauth2poc.resources.util.GenericResponse;
 import br.com.example.auth.security.oauth2poc.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

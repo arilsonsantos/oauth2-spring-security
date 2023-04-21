@@ -1,4 +1,4 @@
-package br.com.example.auth.security.oauth2poc.infra.config;
+package br.com.example.auth.security.oauth2poc.config;
 
 import org.springframework.stereotype.Component;
 

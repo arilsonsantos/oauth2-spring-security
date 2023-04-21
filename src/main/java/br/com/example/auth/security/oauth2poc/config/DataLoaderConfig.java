@@ -1,13 +1,13 @@
-package br.com.example.auth.security.oauth2poc.infra.config;
+package br.com.example.auth.security.oauth2poc.config;
 
 
-import br.com.example.auth.security.oauth2poc.domain.Customer;
-import br.com.example.auth.security.oauth2poc.domain.Role;
-import br.com.example.auth.security.oauth2poc.domain.User;
-import br.com.example.auth.security.oauth2poc.infra.repository.CustomerRepository;
-import br.com.example.auth.security.oauth2poc.infra.repository.RoleRepository;
-import br.com.example.auth.security.oauth2poc.infra.repository.TokenVerificationRepository;
-import br.com.example.auth.security.oauth2poc.infra.repository.UserRepository;
+import br.com.example.auth.security.oauth2poc.model.Customer;
+import br.com.example.auth.security.oauth2poc.model.Role;
+import br.com.example.auth.security.oauth2poc.model.User;
+import br.com.example.auth.security.oauth2poc.repository.CustomerRepository;
+import br.com.example.auth.security.oauth2poc.repository.RoleRepository;
+import br.com.example.auth.security.oauth2poc.repository.TokenVerificationRepository;
+import br.com.example.auth.security.oauth2poc.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;

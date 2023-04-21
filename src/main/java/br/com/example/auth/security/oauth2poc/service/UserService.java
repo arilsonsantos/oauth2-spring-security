@@ -1,13 +1,13 @@
 package br.com.example.auth.security.oauth2poc.service;
 
-import br.com.example.auth.security.oauth2poc.domain.TokenVerification;
-import br.com.example.auth.security.oauth2poc.domain.User;
-import br.com.example.auth.security.oauth2poc.domain.dto.UserDto;
+import br.com.example.auth.security.oauth2poc.model.TokenVerification;
+import br.com.example.auth.security.oauth2poc.model.User;
+import br.com.example.auth.security.oauth2poc.model.dto.UserDto;
 import br.com.example.auth.security.oauth2poc.exceptions.ResourceAlreadyExistsException;
 import br.com.example.auth.security.oauth2poc.exceptions.ResourceNotFoundException;
-import br.com.example.auth.security.oauth2poc.infra.repository.RoleRepository;
-import br.com.example.auth.security.oauth2poc.infra.repository.TokenVerificationRepository;
-import br.com.example.auth.security.oauth2poc.infra.repository.UserRepository;
+import br.com.example.auth.security.oauth2poc.repository.RoleRepository;
+import br.com.example.auth.security.oauth2poc.repository.TokenVerificationRepository;
+import br.com.example.auth.security.oauth2poc.repository.UserRepository;
 import br.com.example.auth.security.oauth2poc.service.email.IEmailService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

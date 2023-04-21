@@ -1,4 +1,4 @@
-package br.com.example.auth.security.oauth2poc.infra.config;
+package br.com.example.auth.security.oauth2poc.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
