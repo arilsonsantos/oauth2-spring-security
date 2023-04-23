@@ -1,7 +1,7 @@
 package br.com.example.auth.security.oauth2poc.config;
 
 import br.com.example.auth.security.oauth2poc.service.CustomUserDetailsService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,11 +14,11 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
-@AllArgsConstructor
+@RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private CustomUserDetailsService userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
 
     @Bean
     @Override
@@ -31,9 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
-    //do not need authentication
+    //does not need authentication
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web)  {
         web.ignoring()
                 .antMatchers(HttpMethod.OPTIONS, "/**")
                 .antMatchers("/home")

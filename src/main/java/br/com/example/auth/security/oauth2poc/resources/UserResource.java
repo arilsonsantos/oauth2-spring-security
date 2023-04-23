@@ -4,7 +4,7 @@ import br.com.example.auth.security.oauth2poc.model.Role;
 import br.com.example.auth.security.oauth2poc.model.User;
 import br.com.example.auth.security.oauth2poc.model.dto.UserDto;
 import br.com.example.auth.security.oauth2poc.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
@@ -19,10 +19,10 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
+@RequiredArgsConstructor
 public class UserResource {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
     @GetMapping
     public ResponseEntity<List<UserDto>> findAll() {

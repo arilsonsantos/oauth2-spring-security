@@ -8,8 +8,7 @@ import br.com.example.auth.security.oauth2poc.repository.CustomerRepository;
 import br.com.example.auth.security.oauth2poc.repository.RoleRepository;
 import br.com.example.auth.security.oauth2poc.repository.TokenVerificationRepository;
 import br.com.example.auth.security.oauth2poc.repository.UserRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -20,16 +19,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Configuration
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DataLoaderConfig implements ApplicationListener<ContextRefreshedEvent> {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final CustomerRepository customerRepository;
     private final TokenVerificationRepository tokenVerificationRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {

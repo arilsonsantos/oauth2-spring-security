@@ -1,3 +1,4 @@
+
 spring:
   mvc:
     pathmatch:
@@ -16,8 +17,8 @@ spring:
   mail:
     host: smtp.mailtrap.io
     port: 2525
-    username: 4f967c13da91c3
-    password: 762a7eb99def56
+    username: 9f46419e235e89
+    password: 3f26d992bacb93
     protocol: smtp
     properties:
       mail:
@@ -43,4 +44,6 @@ default:
   sender: orion@api.com
   url: http://localhost:8080
 
-
+#server:
+#  servlet:
+#    context-path: /registry

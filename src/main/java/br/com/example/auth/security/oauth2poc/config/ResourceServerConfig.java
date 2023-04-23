@@ -25,9 +25,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .and().authorizeRequests()
-                .antMatchers("/api/users/**").hasAnyRole("ADMIN, USERS")
-                .antMatchers("/api/customers/**").hasAnyRole("ADMIN", "USER")
-                .anyRequest().denyAll()
+//                .antMatchers("/api/users/**").hasAnyRole("ADMIN, USERS")
+//                .antMatchers("/api/customers/**").hasAnyRole("ADMIN", "USER")
+//                .anyRequest().denyAll()
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(new OAuth2AccessDeniedHandler());

@@ -92,7 +92,7 @@ public class UserService {
        user.setRoles(Arrays.asList(roleRepository.findByName("USER").get()));
        user.setEnable(false);
        user = create(user);
-       this.emailService.sendConfirmationHtmlEmail(user, null, false);
+       this.emailService.sendConfirmationHtmlEmail(user, null, true);
        return user;
     }
 

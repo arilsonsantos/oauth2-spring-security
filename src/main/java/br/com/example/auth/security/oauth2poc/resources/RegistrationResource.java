@@ -5,17 +5,17 @@ import br.com.example.auth.security.oauth2poc.model.User;
 import br.com.example.auth.security.oauth2poc.model.dto.UserDto;
 import br.com.example.auth.security.oauth2poc.resources.util.GenericResponse;
 import br.com.example.auth.security.oauth2poc.service.UserService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/api/public/registration/users")
 public class RegistrationResource {
 
-    private UserService userService;
+    private final UserService userService;
 
     @PostMapping
     public ResponseEntity<Void> registerUser(@RequestBody UserDto userDto) {
